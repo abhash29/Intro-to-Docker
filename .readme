@@ -28,8 +28,21 @@ Docker
 	1. git clone the project
 	2. docker build -t my-app .
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 * Whenever you will try to run a mongodb container and stores the data but if the container gets killed then all the stored data inside the mongodb compass will get deleted.
 To avoid this - attach a volume to the mongodb container
 1. docker volume create volume_database
 2. docker run -v volume_database:/data/db -p 27017:27017 mongo
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*When you run your node file on your pc and mongodb in a container then you will able to communicate easily
+But when your node is running into a container as well as mongodb is also running on a container then it will not talk directly
+Then you have to create n network between them to talk.
+1. docker build -t mongo_app
+2. docker create network my_custom_network
+3. We can overall write:
+	docker run -d -v volume_database:/data/db --name abhashMongoDb --network my_custom_network -p 27017:27017 mongo
+4. Chnage mongodb url with the my mongodb name abhashMongoDb
+5. docker run -p 3000:3000 --name backend --network my_custom_network mongo_app
