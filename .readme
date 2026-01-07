@@ -1,0 +1,35 @@
+Docker
+1. docker run mongo -> it will run a container for you locally (if not installed then it will install bydefault)
+2. docker ps > will let you know the number of containers running locally
+3. docker run -d mongo -> will let you run container but in a deattach environment so that my terminal will be free
+3. docker run -p 27017:27017 -d -> will let you run a container using port mapping at deattached environment
+4. docker kill id -> it will kill your container
+5. docker rmi monog -> it will remove the image locally so that space could get free
+6. How to create a dockerfile ?
+	1. Create a Dockerfile inside the root dir
+		FROM node:20
+		WORKDIR /usr/src/app
+		COPY package* .
+		COPY ./prisma .
+		RUN npm install
+		RUN npx prisma generate
+		COPY . .
+		RUN npm run build
+		EXPOSE 3000
+		CMD ["node", "dist/index.js"]
+	2. Create a .dockerignore (to make sure useless files should not go inside container)
+		node modules
+		dist
+	3. TO build the container -> docker build -t my-app .
+	4. Dont forget to save your files
+	4. NOTE : Never pass your .env file into docker instead inject it
+		eg: docker run -p 3000:3000 -e DATABASE_URL="..." my-app
+7. How build an project from GitHub ?
+	1. git clone the project
+	2. docker build -t my-app .
+
+
+* Whenever you will try to run a mongodb container and stores the data but if the container gets killed then all the stored data inside the mongodb compass will get deleted.
+To avoid this - attach a volume to the mongodb container
+1. docker volume create volume_database
+2. docker run -v volume_database:/data/db -p 27017:27017 mongo
