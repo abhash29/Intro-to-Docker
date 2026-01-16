@@ -46,3 +46,9 @@ Then you have to create n network between them to talk.
 	docker run -d -v volume_database:/data/db --name abhashMongoDb --network my_custom_network -p 27017:27017 mongo
 4. Chnage mongodb url with the my mongodb name abhashMongoDb
 5. docker run -p 3000:3000 --name backend --network my_custom_network mongo_app
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+To compose the docker
+- create a yaml file
+- write down the codes
+- docker-compose up
